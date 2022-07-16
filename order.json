@@ -1,0 +1,149 @@
+{
+  "orderItems": [
+    {
+      "product": "62c1c965ef788d4e2ae6ebff",
+      "name": "Mi Vaccum Mop",
+      "image": "/img/vaccumMop.png",
+      "price": 14999,
+      "mrp": 15000,
+      "category": "Electronics",
+      "countInStock": 3,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 5
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfa",
+      "name": "Mi Fitness Band",
+      "image": "/img/band5.png",
+      "price": 2999,
+      "mrp": 3500,
+      "category": "Electronics",
+      "countInStock": 7,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 3
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfb",
+      "name": "Mi Wirless Mouse",
+      "image": "/img/mouse.png",
+      "price": 899,
+      "mrp": 1000,
+      "category": "Electronics",
+      "countInStock": 8,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 2
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebff",
+      "name": "Mi Vaccum Mop",
+      "image": "/img/vaccumMop.png",
+      "price": 14999,
+      "mrp": 15000,
+      "category": "Electronics",
+      "countInStock": 3,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 5
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfa",
+      "name": "Mi Fitness Band",
+      "image": "/img/band5.png",
+      "price": 2999,
+      "mrp": 3500,
+      "category": "Electronics",
+      "countInStock": 7,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 3
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfb",
+      "name": "Mi Wirless Mouse",
+      "image": "/img/mouse.png",
+      "price": 899,
+      "mrp": 1000,
+      "category": "Electronics",
+      "countInStock": 8,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 2
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebff",
+      "name": "Mi Vaccum Mop",
+      "image": "/img/vaccumMop.png",
+      "price": 14999,
+      "mrp": 15000,
+      "category": "Electronics",
+      "countInStock": 3,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 5
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfa",
+      "name": "Mi Fitness Band",
+      "image": "/img/band5.png",
+      "price": 2999,
+      "mrp": 3500,
+      "category": "Electronics",
+      "countInStock": 7,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 3
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfb",
+      "name": "Mi Wirless Mouse",
+      "image": "/img/mouse.png",
+      "price": 899,
+      "mrp": 1000,
+      "category": "Electronics",
+      "countInStock": 8,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 2
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebff",
+      "name": "Mi Vaccum Mop",
+      "image": "/img/vaccumMop.png",
+      "price": 14999,
+      "mrp": 15000,
+      "category": "Electronics",
+      "countInStock": 3,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 5
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfa",
+      "name": "Mi Fitness Band",
+      "image": "/img/band5.png",
+      "price": 2999,
+      "mrp": 3500,
+      "category": "Electronics",
+      "countInStock": 7,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 3
+    },
+    {
+      "product": "62c1c965ef788d4e2ae6ebfb",
+      "name": "Mi Wirless Mouse",
+      "image": "/img/mouse.png",
+      "price": 899,
+      "mrp": 1000,
+      "category": "Electronics",
+      "countInStock": 8,
+      "owner": "62c1c965ef788d4e2ae6ebf5",
+      "qty": 2
+    }
+  ],
+  "shippingAddress": {
+    "phone": "9902416190",
+    "address": "Chitguppa",
+    "city": "Bidar",
+    "pinCode": "585412",
+    "country": "India"
+  },
+  "paymentMethod": "Cash On Delivery",
+  "itemsPrice": "18897.00",
+  "shippingPrice": "0.00",
+  "taxPrice": "0.00",
+  "totalPrice": "18897.00",
+  "phone": ""
+}
