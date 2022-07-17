@@ -2,32 +2,20 @@ const express = require('express')
 const bp = require('body-parser')
 const cors = require('cors')
 const app = express()
-const printer = require('../printer/print')
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 const port = 5002
 const ThermalPrinter = require('node-thermal-printer').printer
 const PrinterTypes = require('node-thermal-printer').types
-// const orderDetails = require('./order.json')
-const electron = typeof process !== 'undefined' && process.versions && !!process.versions.electron
 
 app.use(cors())
-
-app.post('/print1', (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone } = req.body
-  printer.printBill(req.body)
-  res.statusCode(200)
-})
 
 app.post('/print', (req, res) => {
   const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone } = req.body
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    //interface: "printer:Canon LBP2900",
-    // interface: "printer:EPSON TM-T82 Receipt",
-    // VENDOR THERMAL PRINTER(COPY 1)
     interface: 'printer:auto',
-    driver: require(electron ? 'electron-printer' : 'printer'),
+    driver: require('printer'),
   })
 
   function formatTime(date) {
@@ -204,11 +192,11 @@ app.post('/print', (req, res) => {
     let execute = printer.execute()
     console.error('Print done!')
     res.send('Print done!')
-    res.statusCode(200)
+    res.statusCode = 200
   } catch (error) {
     console.log('Print failed:', error)
     res.send('Print failed:', error)
-    res.statusCode(500)
+    res.statusCode = 500
   }
 })
 
