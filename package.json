@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node express.js",
+    "server": "nodemon express.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "node-thermal-printer": "^4.1.2",
+    "nodemon": "^2.0.19",
     "printer": "^0.4.0"
   }
 }
