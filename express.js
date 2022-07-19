@@ -11,7 +11,7 @@ const PrinterTypes = require('node-thermal-printer').types
 app.use(cors())
 
 app.post('/print', (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone } = req.body
+  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, _id } = req.body
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: 'printer:auto',
@@ -96,7 +96,7 @@ app.post('/print', (req, res) => {
       bold: true,
     },
 
-    { text: 'Invoice No : 20221234', align: 'RIGHT', cols: 25, bold: true },
+    { text: `Invoice No : ${_id}`, align: 'RIGHT', cols: 25, bold: true },
   ])
 
   // date and time details
@@ -116,20 +116,21 @@ app.post('/print', (req, res) => {
 
   // order header details
   printer.tableCustom([
-    { text: 'Description', align: 'LEFT', cols: 22, bold: true },
+    { text: 'ITEM NAME', align: 'LEFT', cols: 19, bold: true },
     {
-      text: 'Qty',
+      text: 'QTY',
+      align: 'LEFT',
+      cols: 4,
+      bold: true,
+    },
+    { text: 'PRICE', align: 'LEFT', cols: 7, bold: true },
+    {
+      text: 'DIS',
       align: 'LEFT',
       cols: 5,
       bold: true,
     },
-    {
-      text: 'Dis',
-      align: 'RIGHT',
-      cols: 5,
-      bold: true,
-    },
-    { text: 'Price', align: 'RIGHT', cols: 10, bold: true },
+    { text: 'AMOUNT', align: 'LEFT', cols: 7, bold: true },
   ])
 
   //order items details
@@ -139,42 +140,44 @@ app.post('/print', (req, res) => {
 
     let discount = calculateDiscount(item)
     printer.tableCustom([
-      { text: item.name, align: 'LEFT', cols: 22 },
+      { text: item.name, align: 'LEFT', cols: 19 },
       {
         text: item.qty,
         align: 'LEFT',
-        cols: 5,
+        cols: 4,
       },
+      { text: item.price, align: 'LEFT', cols: 7 },
       {
         text: `${Math.round((item.mrp - item.price) * item.qty, 0)}`,
-        align: 'RIGHT',
+        align: 'LEFT',
         cols: 5,
       },
-      { text: item.price * item.qty, align: 'RIGHT', cols: 10 },
+      { text: item.price * item.qty, align: 'LEFT', cols: 7 },
     ])
   })
   printer.newLine()
   printer.underline(true)
   // total details
   printer.tableCustom([
-    { text: 'TOTAL', align: 'LEFT', cols: 22, bold: true },
+    { text: 'TOTAL', align: 'LEFT', cols: 19, bold: true },
     {
       text: calculateTotalItems(orderItems),
+      align: 'LEFT',
+      cols: 4,
+      bold: true,
+    },
+    { text: '', align: 'LEFT', cols: 7 },
+    {
+      text: calculateTotalSavings(orderItems),
       align: 'LEFT',
       cols: 5,
       bold: true,
     },
-    {
-      text: calculateTotalSavings(orderItems),
-      align: 'RIGHT',
-      cols: 5,
-      bold: true,
-    },
-    { text: Math.round(totalPrice, 0), align: 'RIGHT', cols: 10, bold: true },
+    { text: Math.round(totalPrice, 0), align: 'LEFT', cols: 7, bold: true },
   ])
   printer.underline(false)
   //Discount details
-  printer.tableCustom([{ text: `SAVINGS :  ${calculateTotalSavings(orderItems)} `, align: 'LEFT', cols: 17, bold: true }])
+  printer.tableCustom([{ text: `YOU SAVED :  ${calculateTotalSavings(orderItems)} `, align: 'CENTER', cols: 27, bold: true }])
 
   printer.newLine() //bank line
   printer.println('Scan to Order Online')
