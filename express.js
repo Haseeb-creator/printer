@@ -11,7 +11,7 @@ const PrinterTypes = require('node-thermal-printer').types
 app.use(cors())
 
 app.post('/print', (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, _id } = req.body
+  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, invoiceId } = req.body
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
     interface: 'printer:auto',
@@ -96,7 +96,7 @@ app.post('/print', (req, res) => {
       bold: true,
     },
 
-    { text: `Invoice No : ${_id}`, align: 'RIGHT', cols: 25, bold: true },
+    { text: `Invoice No : ${invoiceId}`, align: 'RIGHT', cols: 25, bold: true },
   ])
 
   // date and time details
