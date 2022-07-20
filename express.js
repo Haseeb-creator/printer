@@ -14,7 +14,7 @@ app.post('/print', (req, res) => {
   const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, invoiceId } = req.body
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    interface: 'printer:auto',
+    interface: 'printer:RECIEPT PRINTER',
     driver: require('printer'),
   })
 
@@ -32,7 +32,7 @@ app.post('/print', (req, res) => {
 
   function formatDate(date) {
     let day = date.getDate()
-    let month = date.getMonth()
+    let month = date.getMonth() + 1
     let year = date.getFullYear()
     day = day < 10 ? '0' + day : day
     month = month < 10 ? '0' + month : month
@@ -123,11 +123,11 @@ app.post('/print', (req, res) => {
       cols: 4,
       bold: true,
     },
-    { text: 'PRICE', align: 'LEFT', cols: 7, bold: true },
+    { text: 'MRP', align: 'LEFT', cols: 6, bold: true },
     {
-      text: 'DIS',
+      text: 'PRICE',
       align: 'LEFT',
-      cols: 5,
+      cols: 6,
       bold: true,
     },
     { text: 'AMOUNT', align: 'LEFT', cols: 7, bold: true },
@@ -146,11 +146,11 @@ app.post('/print', (req, res) => {
         align: 'LEFT',
         cols: 4,
       },
-      { text: item.price, align: 'LEFT', cols: 7 },
+      { text: item.mrp, align: 'LEFT', cols: 6 },
       {
-        text: `${Math.round((item.mrp - item.price) * item.qty, 0)}`,
+        text: item.price,
         align: 'LEFT',
-        cols: 5,
+        cols: 6,
       },
       { text: item.price * item.qty, align: 'LEFT', cols: 7 },
     ])
@@ -166,11 +166,11 @@ app.post('/print', (req, res) => {
       cols: 4,
       bold: true,
     },
-    { text: '', align: 'LEFT', cols: 7 },
+    { text: '', align: 'LEFT', cols: 6 },
     {
-      text: calculateTotalSavings(orderItems),
+      text: '',
       align: 'LEFT',
-      cols: 5,
+      cols: 6,
       bold: true,
     },
     { text: Math.round(totalPrice, 0), align: 'LEFT', cols: 7, bold: true },
