@@ -88,7 +88,7 @@ app.post('/print', (req, res) => {
 
   // payment details
   printer.tableCustom([
-    { text: `Payment : ${paymentMethod}`, align: 'LEFT', cols: 15, bold: true },
+    { text: `Payment : ${paymentMethod}`, align: 'LEFT', cols: 22, bold: true },
     {
       text: '',
       align: 'CENTER',
@@ -102,7 +102,7 @@ app.post('/print', (req, res) => {
   // date and time details
 
   printer.tableCustom([
-    { text: `Time : ${time}`, align: 'LEFT', cols: 15, bold: true },
+    { text: `Time : ${time}`, align: 'LEFT', cols: 22, bold: true },
     {
       text: '',
       align: 'CENTER',
@@ -113,73 +113,77 @@ app.post('/print', (req, res) => {
     { text: `Date: ${date}`, align: 'RIGHT', cols: 25, bold: true },
   ])
   printer.drawLine()
-
   // order header details
   printer.tableCustom([
-    { text: 'ITEM NAME', align: 'LEFT', cols: 19, bold: true },
+    { text: 'ITEM NAME', align: 'LEFT', cols: 22, bold: true },
     {
       text: 'QTY',
       align: 'LEFT',
-      cols: 4,
+      cols: 5,
       bold: true,
     },
     { text: 'MRP', align: 'LEFT', cols: 6, bold: true },
     {
       text: 'PRICE',
       align: 'LEFT',
-      cols: 6,
+      cols: 8,
       bold: true,
     },
     { text: 'AMOUNT', align: 'LEFT', cols: 7, bold: true },
   ])
+  printer.drawLine()
 
   //order items details
-
   orderItems.map((item) => {
     printer.beep()
 
     let discount = calculateDiscount(item)
     printer.tableCustom([
-      { text: item.name, align: 'LEFT', cols: 19 },
+      { text: item.name, align: 'LEFT', cols: 22 },
       {
         text: item.qty,
         align: 'LEFT',
-        cols: 4,
+        cols: 5,
       },
       { text: item.mrp, align: 'LEFT', cols: 6 },
       {
         text: item.price,
         align: 'LEFT',
-        cols: 6,
+        cols: 8,
       },
       { text: item.price * item.qty, align: 'LEFT', cols: 7 },
     ])
   })
-  printer.newLine()
-  printer.underline(true)
+  printer.drawLine()
+
   // total details
   printer.tableCustom([
-    { text: 'TOTAL', align: 'LEFT', cols: 19, bold: true },
+    { text: 'TOTAL', align: 'LEFT', cols: 22, bold: true },
     {
       text: calculateTotalItems(orderItems),
       align: 'LEFT',
-      cols: 4,
+      cols: 5,
       bold: true,
     },
     { text: '', align: 'LEFT', cols: 6 },
     {
       text: '',
       align: 'LEFT',
-      cols: 6,
+      cols: 8,
       bold: true,
     },
     { text: Math.round(totalPrice, 0), align: 'LEFT', cols: 7, bold: true },
   ])
-  printer.underline(false)
+  printer.drawLine()
   //Discount details
-  printer.tableCustom([{ text: `YOU SAVED :  ${calculateTotalSavings(orderItems)} `, align: 'CENTER', cols: 27, bold: true }])
+  printer.tableCustom([{ text: `YOU SAVED :  ${calculateTotalSavings(orderItems)} `, align: 'CENTER', cols: 20, bold: true }])
 
   printer.newLine() //bank line
+  printer.setTextSize(0, 1)
+  printer.println('Thank you for shopping with us!')
+  printer.setTextNormal()
+  printer.newLine()
+
   printer.println('Scan to Order Online')
   printer.printQR('https://www.bidarmall.com', {
     cellSize: 6, // 1 - 8
