@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node express.js",
-    "server": "nodemon express.js"
-  },
+    "server": "nodemon express.js",
+    "build": "pkg express.js"
+  },},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "express": "^4.18.1",
     "node-thermal-printer": "^4.1.2",
     "nodemon": "^2.0.19",
+    "pkg": "^5.8.0",
     "printer": "^0.4.0"
   }
 }
