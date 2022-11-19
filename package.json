@@ -7,7 +7,7 @@
     "start": "node express.js",
     "server": "nodemon express.js",
     "build": "pkg express.js"
-  },},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
