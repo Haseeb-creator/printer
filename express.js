@@ -76,13 +76,13 @@ app.post('/print', (req, res) => {
 
   printer.alignCenter()
   printer.setTextQuadArea()
-  printer.println('96 LAKH ENTERPRISES')
+  printer.println('MS 96 LAKH')
   printer.setTextNormal()
   printer.alignCenter()
-  printer.println('Beside SBI Bank Chitguppa-585412')
-  printer.println('Phone:9902416190')
+  printer.println('SH/NO: 15/92 Dastagir Mohelle Chitguppa-585412')
+  printer.println('Phone:7259694177')
   printer.println('INVOICE')
-  printer.println('GST:ADFH48934TBW33498T')
+  printer.println('GST:29CNVPJ6720N1Z2')
   printer.setTextNormal()
   printer.newLine()
 
@@ -172,11 +172,11 @@ app.post('/print', (req, res) => {
       cols: 8,
       bold: true,
     },
-    { text: Math.round(totalPrice, 0), align: 'LEFT', cols: 7, bold: true },
+    { text: `${Math.round(totalPrice, 0)} `, align: 'LEFT', cols: 7, bold: true },
   ])
   printer.drawLine()
   //Discount details
-  printer.tableCustom([{ text: `YOU SAVED :  ${calculateTotalSavings(orderItems)} `, align: 'CENTER', cols: 20, bold: true }])
+  printer.tableCustom([{ text: `YOU SAVED : Rs ${calculateTotalSavings(orderItems)} `, align: 'CENTER', cols: 20, bold: true }])
 
   printer.newLine() //bank line
   printer.setTextSize(0, 1)
@@ -185,13 +185,14 @@ app.post('/print', (req, res) => {
   printer.newLine()
 
   printer.println('Scan to Order Online')
-  printer.printQR('https://www.bidarmall.com', {
+  printer.printQR('https://www.retailcenter.io', {
     cellSize: 6, // 1 - 8
     correction: 'M', // L(7%), M(15%), Q(25%), H(30%)
     model: 2, // 1 - Model 1
     // 2 - Model 2 (standard)
     // 3 - Micro QR
   })
+  printer.println('www.retailcenter.io')
 
   printer.cut()
 
