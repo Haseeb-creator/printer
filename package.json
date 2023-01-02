@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node express.js",
-    "server": "nodemon express.js"
+    "server": "nodemon express.js",
+    "build": "pkg express.js"
   },
   "keywords": [],
   "author": "",
