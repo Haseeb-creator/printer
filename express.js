@@ -212,6 +212,61 @@ app.get('/', (req, res) => {
   res.send('Print Server is Running')
 })
 
+app.post('/label', (req, res) => {
+  const { brand, name, size, mrp, price, tax, sku, category, description, countInStock } = req.body;
+  const Printer = require('printer');
+
+  // Calculate the number of times to repeat the print job
+  const repeatCount = Math.ceil(countInStock / 3);
+
+  // ZPL template with adjusted positions for 203 DPI
+  const template = `^XA
+  ^LL480  ; Total label length (160 dots * 3 labels)
+  ^FW264  ; Label width (264 dots)
+
+  ; Label 1
+  ^FO70,20^A0N,25,25^FD${name}^FS  
+  ^FO70,45^A0N,25,25^FDQTY:${size}^FS 
+  ^BY2,3,32^FO70,115^BCN,128,Y,N,N^FD${sku}^FS
+  ^FO70,140^A0N,25,25^FD${sku}^FS ; SKU text below barcode
+  ^FO70,70^A0N,25,25^FDMRP: ${mrp}        SP: ${price}^FS 
+
+
+  ; Label 2
+  ^FO334,20^A0N,25,25^FD${name}^FS  
+  ^FO334,45^A0N,25,25^FDQTY:${size}^FS  
+  ^BY2,3,32^FO334,115^BCN,128,Y,N,N^FD${sku}^FS
+  ^FO334,140^A0N,25,25^FD${sku}^FS ; SKU text below barcode
+  ^FO334,70^A0N,25,25^FDMRP: ${mrp}       SP: ${price}^FS
+
+
+  ; Label 3
+  ^FO598,20^A0N,25,25^FD${name}^FS 
+  ^FO598,45^A0N,25,25^FDQTY:${size}^FS  
+  ^BY2,3,32^FO598,115^BCN,128,Y,N,N^FD${sku}^FS
+  ^FO598,140^A0N,25,25^FD${sku}^FS ; SKU text below barcode
+  ^FO598,70^A0N,25,25^FDMRP: ${mrp}       SP: ${price}^FS
+
+  ^XZ`;
+
+  function printZebra(template, printer_name) {
+    Printer.printDirect({
+      data: template,
+      printer: printer_name,
+      type: "RAW",
+      success: function () {
+        console.log("printed");
+      },
+      error: function (err) { console.log(err); }
+    });
+  }
+
+  // Repeat the print job
+  for (let i = 0; i < repeatCount; i++) {
+    printZebra(template, "TVSELP");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Print Server listening on port ${port}`)
 })
