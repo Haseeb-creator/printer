@@ -225,27 +225,27 @@ app.post('/label', (req, res) => {
   ^FW264  ; Label width (264 dots)
 
   ; Label 1
-  ^FO70,20^A0N,25,25^FD${name}^FS  
-  ^FO70,45^A0N,25,25^FDQTY:${size}^FS 
+  ^FO70,20^A0N,24,24^FD${name}^FS  
+  ^FO70,47^A0N,24,24^FDQTY:${size}^FS 
   ^BY2,3,32^FO70,100^BCN,50,Y,N,N^FD${sku}^FS
-  ^FO70,155^A0N,25,25^FD${sku}^FS ; SKU text below barcode
-  ^FO70,70^A0N,25,25^FDMRP: ${mrp}        SP: ${price}^FS 
+  ;^FO70,155^A0N,25,25^FD${sku}^FS
+  ^FO70,73^A0N,24,24^FDMRP: ${mrp}        SP: ${price}^FS 
 
 
   ; Label 2
-  ^FO334,20^A0N,25,25^FD${name}^FS  
-  ^FO334,45^A0N,25,25^FDQTY:${size}^FS  
+  ^FO334,20^A0N,24,24^FD${name}^FS  
+  ^FO334,47^A0N,24,24^FDQTY:${size}^FS  
   ^BY2,3,32^FO334,100^BCN,50,Y,N,N^FD${sku}^FS
-  ^FO334,155^A0N,25,25^FD${sku}^FS ; SKU text below barcode
-  ^FO334,70^A0N,25,25^FDMRP: ${mrp}       SP: ${price}^FS
+  ;^FO334,155^A0N,25,25^FD${sku}^FS ; 
+  ^FO334,73^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
 
 
   ; Label 3
-  ^FO598,20^A0N,25,25^FD${name}^FS 
-  ^FO598,45^A0N,25,25^FDQTY:${size}^FS  
+  ^FO598,20^A0N,24,24^FD${name}^FS 
+  ^FO598,47^A0N,24,24^FDQTY:${size}^FS  
   ^BY2,3,32^FO598,100^BCN,50,Y,N,N^FD${sku}^FS
-  ^FO598,155^A0N,25,25^FD${sku}^FS ; SKU text below barcode
-  ^FO598,70^A0N,25,25^FDMRP: ${mrp}       SP: ${price}^FS
+  ;^FO598,155^A0N,25,25^FD${sku}^FS 
+  ^FO598,73^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
 
   ^XZ`;
 
