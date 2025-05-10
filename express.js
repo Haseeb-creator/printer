@@ -11,10 +11,10 @@ const PrinterTypes = require('node-thermal-printer').types
 app.use(cors())
 
 app.post('/print', (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, invoiceId } = req.body
+  const { orderItems, shippingAddress, paymentMethod, store, itemsPrice, taxPrice, shippingPrice, totalPrice, phone, invoiceId } = req.body
   let printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    interface: 'printer:RECIEPT PRINTER',
+    interface: 'printer:POS PRINTER',
     driver: require('printer'),
   })
 
@@ -76,13 +76,12 @@ app.post('/print', (req, res) => {
 
   printer.alignCenter()
   printer.setTextQuadArea()
-  printer.println('MS 96 LAKH')
+  printer.println(store.company)
   printer.setTextNormal()
   printer.alignCenter()
-  printer.println('SH/NO: 15/92 Dastagir Mohelle Chitguppa-585412')
-  printer.println('Phone:7259694177')
+  printer.println(store.address)
+  printer.println(store.name)
   printer.println('INVOICE')
-  printer.println('GST:29CNVPJ6720N1Z2')
   printer.setTextNormal()
   printer.newLine()
 
@@ -96,7 +95,7 @@ app.post('/print', (req, res) => {
       bold: true,
     },
 
-    { text: `Invoice No : ${invoiceId}`, align: 'RIGHT', cols: 25, bold: true },
+    { text: `Invoice No : ${invoiceId}`, align: 'RIGHT', cols: 24, bold: true },
   ])
 
   // date and time details
@@ -110,7 +109,7 @@ app.post('/print', (req, res) => {
       bold: true,
     },
 
-    { text: `Date: ${date}`, align: 'RIGHT', cols: 25, bold: true },
+    { text: `Date: ${date}`, align: 'RIGHT', cols: 24, bold: true },
   ])
   printer.drawLine()
   // order header details
@@ -180,19 +179,11 @@ app.post('/print', (req, res) => {
 
   printer.newLine() //bank line
   printer.setTextSize(0, 1)
-  printer.println('Thank you for shopping with us!')
+  printer.println('Thank you for shopping with us !')
   printer.setTextNormal()
   printer.newLine()
 
-  printer.println('Scan to Order Online')
-  printer.printQR('https://www.retailcenter.io', {
-    cellSize: 6, // 1 - 8
-    correction: 'M', // L(7%), M(15%), Q(25%), H(30%)
-    model: 2, // 1 - Model 1
-    // 2 - Model 2 (standard)
-    // 3 - Micro QR
-  })
-  printer.println('www.retailcenter.io')
+
 
   printer.cut()
 
@@ -213,11 +204,13 @@ app.get('/', (req, res) => {
 })
 
 app.post('/label', (req, res) => {
-  const { brand, name, size, mrp, price, tax, sku, category, description, countInStock } = req.body;
+  const { brand, name, size, mrp, price, tax, sku, category, description, countInStock, labels } = req.body;
   const Printer = require('printer');
+  let name1 = name.substring(0, 20);
+  let name2 = name.substring(20);
 
   // Calculate the number of times to repeat the print job
-  const repeatCount = Math.ceil(countInStock / 3);
+  const repeatCount = Math.ceil(labels / 3);
 
   // ZPL template with adjusted positions for 203 DPI
   const template = `^XA
@@ -225,28 +218,27 @@ app.post('/label', (req, res) => {
   ^FW264  ; Label width (264 dots)
 
   ; Label 1
-  ^FO70,20^A0N,24,24^FD${name}^FS  
-  ^FO70,47^A0N,24,24^FDQTY:${size}^FS 
-  ^BY2,3,32^FO70,100^BCN,50,Y,N,N^FD${sku}^FS
-  ;^FO70,155^A0N,25,25^FD${sku}^FS
-  ^FO70,73^A0N,24,24^FDMRP: ${mrp}        SP: ${price}^FS 
+  ^FO70,10^A0N,24,24^FD${name1}^FS 
+  ^FO70,33^A0N,24,24^FD${name2}^FS 
+  ^FO240,33^A0N,24,24^FD${size}^FS 
+  ^BY2,3,32^FO70,95^BCN,35,Y,N,N^FD${sku}^FS
+  ^FO70,65^A0N,24,24^FDMRP: ${mrp}        SP: ${price}^FS 
 
 
   ; Label 2
-  ^FO334,20^A0N,24,24^FD${name}^FS  
-  ^FO334,47^A0N,24,24^FDQTY:${size}^FS  
-  ^BY2,3,32^FO334,100^BCN,50,Y,N,N^FD${sku}^FS
-  ;^FO334,155^A0N,25,25^FD${sku}^FS ; 
-  ^FO334,73^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
+  ^FO334,10^A0N,24,24^FD${name1}^FS 
+  ^FO334,33^A0N,24,24^FD${name2}^FS 
+  ^FO514,33^A0N,24,24^FD${size}^FS  
+  ^BY2,3,32^FO334,95^BCN,35,Y,N,N^FD${sku}^FS 
+  ^FO334,65^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
 
 
   ; Label 3
-  ^FO598,20^A0N,24,24^FD${name}^FS 
-  ^FO598,47^A0N,24,24^FDQTY:${size}^FS  
-  ^BY2,3,32^FO598,100^BCN,50,Y,N,N^FD${sku}^FS
-  ;^FO598,155^A0N,25,25^FD${sku}^FS 
-  ^FO598,73^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
-
+  ^FO598,10^A0N,24,24^FD${name1}^FS 
+  ^FO598,33^A0N,24,24^FD${name2}^FS
+  ^FO778,33^A0N,24,24^FD${size}^FS  
+  ^BY2,3,32^FO598,95^BCN,35,Y,N,N^FD${sku}^FS
+  ^FO598,65^A0N,24,24^FDMRP: ${mrp}       SP: ${price}^FS
   ^XZ`;
 
   function printZebra(template, printer_name) {
@@ -265,6 +257,8 @@ app.post('/label', (req, res) => {
   for (let i = 0; i < repeatCount; i++) {
     printZebra(template, "TVSELP");
   }
+
+  res.send('Label printed')
 });
 
 app.listen(port, () => {
