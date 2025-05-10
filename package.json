@@ -19,5 +19,15 @@
     "nodemon": "^2.0.19",
     "pkg": "^5.8.0",
     "printer": "^0.4.0"
-  }
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/printer/build/Release/*.node",
+      "node_modules/printer/lib/**/*"
+    ],
+    "targets": [
+      "node20"
+    ]
+  },
+  "bin": "express.js"
 }
