@@ -1,6 +1,6 @@
-Unblock-File -Path C:\printer\start.ps1
+Unblock-File -Path D:\printer\start.ps1
 
-$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -NoExit -WindowStyle Hidden -ExecutionPolicy Bypass -File C:\printer\start.ps1"
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -NoExit -WindowStyle Hidden -ExecutionPolicy Bypass -File D:\printer\start.ps1"
 
 $trigger = (New-ScheduledTaskTrigger -AtStartup), (New-ScheduledTaskTrigger -AtLogon)
 
